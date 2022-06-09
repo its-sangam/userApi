@@ -17,9 +17,15 @@ $db = $database->connectDB();
 
 $get_one_user = new User($db);
 
-$user_id = $_GET["user_id"];
-$user = $get_one_user->getOneUser($user_id);
-if ($user->num_rows == 1) {
+$uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+$uri = explode('/',$uri);
+
+$user_id = (int) $uri[4];
+
+if($user_id !=0){
+    $user = $get_one_user->getOneUser($user_id);
+
+    if ($user->num_rows == 1) {
     $user_details = $user->fetch_assoc();
     $user_data = array(
         'id' => $user_details['id'],
@@ -36,5 +42,11 @@ if ($user->num_rows == 1) {
     http_response_code(404);
     echo json_encode(
         array("message" => "No Users with user id " . $user_id)
+    );
+}
+}else{
+    http_response_code(400);
+    echo json_encode(
+        array("message" => "Invalid User Id " . $uri[4])
     );
 }

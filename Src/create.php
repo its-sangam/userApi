@@ -30,7 +30,7 @@ if(!empty($data->username) && !empty($data->email) &&
     if(!empty($data->address)){
         $new_user->address = $data->address;
     }
-    if(!empty($user->phone_number)){
+    if(!empty($data->phone_number)){
        $new_user->phone_number = $data->phone_number;
     }
 

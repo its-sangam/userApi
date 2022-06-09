@@ -2,7 +2,7 @@
 
 header("Access-Control-Allow-Origin:  *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Content-Allow-Methods: POST");
+header("Access-Content-Allow-Methods: DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: COntent-Type, Access-Control-Allow-Headers,Authorization, X-Requested-With");
 
@@ -20,14 +20,18 @@ $db = $database->connectDB();
 
 $user_to_delete = new User($db);
 
-$data = json_decode(file_get_contents("php://input"));
+$uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+$uri = explode('/',$uri);
 
-if(!empty($data->id)){
-    $user_to_delete->id = $data->id;
+$user_id = (int) $uri[4];
+
+if($user_id != 0){
+
+    $user_to_delete->id = $user_id;
 
     if($user_to_delete->deleteUser()){
         http_response_code(201);
-        echo json_encode(array("Message"=>"User with id " . $data->id . " deleted successfully"));
+        echo json_encode(array("Message"=>"User with id " . $user_id . " deleted successfully"));
     }else{
         http_response_code(503);
         echo json_encode(array("Message"=>"Deletion Failed"));
