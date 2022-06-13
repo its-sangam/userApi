@@ -35,7 +35,8 @@ if($users_count > 0){
             "email" => $email,
             "fullname" => $fullname,
             "address" => $address,
-            "phone_number" =>$phone_number
+            "phone_number" =>$phone_number,
+            'profile_pic' => $profile_pic
         );
         array_push($users["body"],$new_user);
     }

@@ -33,7 +33,8 @@ if($user_id !=0){
         'email' => $user_details['email'],
         'fullname' => $user_details['fullname'],
         'address' => $user_details['address'],
-        'phone_number' => $user_details['phone_number']
+        'phone_number' => $user_details['phone_number'],
+        'profile_pic' => $user_details['profile_pic']
     );
 
     http_response_code(200);
